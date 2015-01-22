@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2CF8C01E-709C-4072-9D67-3922959C4996</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CircleIndicatorSample</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>90BB8807218732A81A81FFF9960AB285072DB14A</key>
+		<string>gitlab.corp.intuit.net:intuit-wear-ios/circle-indicator-sample.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CircleIndicatorSample.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>90BB8807218732A81A81FFF9960AB285072DB14A</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>gitlab.corp.intuit.net:intuit-wear-ios/circle-indicator-sample.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>90BB8807218732A81A81FFF9960AB285072DB14A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>90BB8807218732A81A81FFF9960AB285072DB14A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CircleIndicatorSample</string>
+		</dict>
+	</array>
+</dict>
+</plist>

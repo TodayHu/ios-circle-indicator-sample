@@ -12,6 +12,9 @@
 #import <IntuitWearKit/JSONModel.h>
 #import <IntuitWearKit/ListStyle.h>
 #import <IntuitWearKit/IWGlanceCircleIndicator.h>
+#import <IntuitWearKit/Page.h>
+#import <IntuitWearKit/WearableAction.h>
+#import <IntuitWearKit/Action.h>
 
 @class GlanceStyle;
 @class ListStyle;
@@ -80,17 +83,18 @@
 /*!
  *  Actions that can be triggered by this Notification
  */
-@property (nonatomic, retain) NSArray<Optional> *actions;
+@property (nonatomic, retain) NSArray<Action, Optional> *actions;
 
 /*!
  *  Actions that can will only be available on a wearable device, not on the handheld/phone
  */
-@property (nonatomic, retain) NSArray<Optional> *wearableActions;
+@property (nonatomic, retain) NSArray<WearableAction, Optional> *wearableActions;
 
 /*!
  *  Page declaration for multi-page notifications
  */
-@property (nonatomic, retain) NSArray<Optional> *pages;
+@property (nonatomic, retain) NSArray<Page, Optional> *pages;
+
 
 
 

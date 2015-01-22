@@ -11,6 +11,8 @@
 #import <Foundation/Foundation.h>
 #import <IntuitWearKit/JSONModel.h>
 
+@protocol Action @end
+
 /*!
  * @class Action
  *

@@ -11,6 +11,8 @@
 #import <Foundation/Foundation.h>
 #import <IntuitWearKit/JSONModel.h>
 
+@protocol Page @end
+
 /*!
  * @class Page
  *
@@ -27,4 +29,11 @@
  * @discussion Text content for this page, e.g. HTML encoded text
  */
 @property (nonatomic, retain) NSString *pageText;
+
+/*!
+ * @discussion Name of resource to use for the background of the page. NOTE: This resource must already exist.
+ */
+@property (nonatomic, retain) NSString<Optional> *pageBackground;
+
+- (instancetype)init;
 @end
