@@ -34,6 +34,13 @@
 
 - (instancetype)initWithContext:(id)context {
     self = [super initWithContext:context];
+    
+    ////////////////////////////////////////////////////////////////////////
+    // Set the Global Apps Group variable first thing!
+    // This is used to define the App Groups string that defines the
+    // storage area between the iPhone app and the Watch App.
+    IWAppConfigurationApplicationGroupsPrimary = @"group."INTUITWEAR_BUNDLE_PREFIX_STRING@".IWApp.storage";
+    
     if (self){
         // Initialize variables here.
         GlanceStyle *glanceStyle = [self glanceStyleData];

@@ -34,9 +34,9 @@ typedef NS_ENUM(NSInteger, IWGlanceColor){
 };
 
 /*!
- *  External constant that should be used to indicate the App Group name
+ *  External global variable that should be used to indicate the App Group name
  */
-extern NSString *const IWAppConfigurationApplicationGroupsPrimary;
+extern NSString *IWAppConfigurationApplicationGroupsPrimary;
 
 /*!
  *  External constant representing the Key to storing and retrieving
