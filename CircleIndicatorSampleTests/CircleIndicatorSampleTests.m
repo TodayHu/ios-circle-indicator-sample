@@ -3,15 +3,15 @@
 //  CircleIndicatorSampleTests
 //
 //  Created by Osmon, Cindy on 1/20/15.
-//  Copyright (c) 2015 Osmon, Cindy. All rights reserved.
 //
-//  Copyright (c) 1/2/15 Intuit Inc. All rights reserved. Unauthorized reproduction is a
-//  violation of applicable law. This material contains certain confidential and proprietary
-//  information and trade secrets of Intuit Inc.
+//  Copyright (c) 1/2/15 Intuit Inc. All rights reserved. Unauthorized
+//  reproduction is a violation of applicable law. This material contains
+//  certain confidential and proprietary information and trade secrets of
+//  Intuit Inc.
 //
 // The MIT License (MIT)
 //
-//Copyright (c) <year> <copyright holders>
+// Copyright (c) <2015> <Intuit Inc.>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 

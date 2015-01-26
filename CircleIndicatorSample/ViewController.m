@@ -4,13 +4,14 @@
 //
 //  Created by Osmon, Cindy on 1/20/15.
 //
-//  Copyright (c) 1/2/15 Intuit Inc. All rights reserved. Unauthorized reproduction is a
-//  violation of applicable law. This material contains certain confidential and proprietary
-//  information and trade secrets of Intuit Inc.
+//  Copyright (c) 1/2/15 Intuit Inc. All rights reserved. Unauthorized
+//  reproduction is a violation of applicable law. This material contains
+//  certain confidential and proprietary information and trade secrets of
+//  Intuit Inc.
 //
 // The MIT License (MIT)
 //
-//Copyright (c) <year> <copyright holders>
+// Copyright (c) <2015> <Intuit Inc.>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -55,6 +56,12 @@ IWearNotificationContent *notificationContent;
  */
 NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"largeIcon\": \"default\",\"background\":\"bitmapName\",\"contentTitle\": \"Overall Title\",\"contentText\": \"This is the main text\",\"contentIntentName\": \"MainActivity\",\"glanceStyle\":{\"glanceColor\":1,\"glanceTotalItemCount\": 500,\"glanceCompletedItemsCount\":222,\"glanceHeaderLabelText\": \"Overall Budget\",\"glanceInnerLabelText\": \"$222\",\"glanceInnerSubLabelText\": \"Left\"},\"BigTextStyle\": {\"bigContentTitle\": \"Big content title\",\"bigText\":\"This is some very big text that might wrap and fill several lines I hope.\",\"summary\": \"Summary of big text.\"},\"pages\": [{\"pageTitle\":\"Page Title\",\"pageText\":\"New Page 1 Text.\"},{\"pageTitle\": \"Page 2 Title\",\"pageText\": \"New Page 2 Text.\"}],\"ListStyle\": {\"icon\":\"ic_menu_tt\",\"title\": \"Tap to take action!\",\"label\": \"Tax Day\",\"intentName\": \"com.intuit.intuitwear.testcases.ActionReceiver\",\"item\": [\"Purchase TurboTax\",\"Create Event\",\"Remind me later\",\"Dismiss\",\"Web Site\",\"Create a CalendarEvent\",\"Set an Alarm\",\"I don't pay taxes\"],\"visible\": 4}}";
 
+/*!
+ * @class ViewController
+ *
+ * @discussion Main iPhone application View Controller that handles all callbacks
+ *             for the Circle Indicator controls (i.e. max, current values, etc).
+ */
 @implementation ViewController
 
 - (void)viewDidLoad {
@@ -105,31 +112,65 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
     self.glanceCompletedSlider.value = notificationContent.glanceStyle.glanceCompletedItemsCount;
 }
 
+/*!
+ *  Callback method called after the View Controller appeared on the screen.
+ *
+ *  @param animated Flag indicating if view should be animated as it appears.
+ */
 - (void) viewDidAppear:(BOOL)animated {
     // Set Color Picker to notification content setting.
-    // NOTE: This should be set in viewDidAppear instead of viewDidLoad
+    // NOTE: This should be set here in viewDidAppear instead of viewDidLoad
     NSInteger selectedDefaultRowShouldBe = notificationContent.glanceStyle.glanceColor;
     [_glanceColorPicker selectRow:selectedDefaultRowShouldBe inComponent:0 animated:NO];
     [_glanceColorPicker reloadComponent:0];
 }
 
+/*!
+ *  Callback invoked when a memory warning occurs.  Dispose of any
+ *  resources that were created by this class.
+ */
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-// returns the number of 'columns' to display.
+/*!
+ *  Returns the number of 'columns' to display.
+ *
+ *  @param pickerView Color picker that allows the user to choose the color
+ *                    of the Circle Indicator.
+ *
+ *  @return Returns the number of components in the Picker view.
+ */
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
 }
 
-// returns the # of rows in each component..
+/*!
+ *  Returns the # of rows in each component
+ *
+ *  @param pickerView Color picker that allows the user to choose the color
+ *                    of the Circle Indicator.
+ *  @param component  Integer representing the row Component
+ *
+ *  @return # of rows in each component
+ */
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     return _colorData.count;
 }
 
+/*!
+ *  Returns the title of a given input row.
+ *
+ *  @param pickerView Color picker that allows the user to choose the color
+ *                    of the Circle Indicator.
+ *  @param row        Integer representing the row for which the title will be returned.
+ *  @param component  Integer representing the component within the row.
+ *
+ *  @return The title of the Row.
+ */
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     return _colorData[row];
@@ -145,6 +186,11 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
     }
 }
 
+/*!
+ *  Callback invoked when the total count slider value has changed.
+ *
+ *  @param sender The UISlider object causing the event to trigger.
+ */
 - (IBAction)totalCountValueChanged:(UISlider *)sender {
     self.totalCountValue.text = [NSString stringWithFormat:@"%f", sender.value];
     
@@ -158,6 +204,11 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
     }
 }
 
+/*!
+ *  Callback invoked when the completed count slider value has changed.
+ *
+ *  @param sender The UISlider object causing the event to trigger.
+ */
 - (IBAction)completedCountValueChanged:(UISlider *)sender {
     int intSliderValue = [sender value];
     self.completedCountValue.text = [NSString stringWithFormat:@"%i", intSliderValue];
