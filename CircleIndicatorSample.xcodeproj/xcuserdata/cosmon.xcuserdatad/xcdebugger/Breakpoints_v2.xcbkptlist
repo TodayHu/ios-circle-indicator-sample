@@ -6,15 +6,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CircleIndicatorSample/ViewController.m"
-            timestampString = "444006098.10208"
+            timestampString = "444085651.984857"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CircleIndicatorSample WatchKit Extension/GlanceController.m"
-            timestampString = "443740653.988181"
+            timestampString = "444085651.984857"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "@implementation GlanceController"
             landmarkType = "3">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CircleIndicatorSample/ViewController.m"
-            timestampString = "444006098.10208"
+            timestampString = "444085651.984857"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "214"
-            endingLineNumber = "214"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "-completedCountValueChanged:"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,41 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CircleIndicatorSample WatchKit Extension/GlanceController.m"
-            timestampString = "444006098.10208"
+            timestampString = "444085651.984857"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[GlanceController presentedTotalListItemCount]"
-                  moduleName = "CircleIndicatorSample WatchKit Extension"
-                  urlString = "file:///Users/cosmon/iOSProjects/CircleIndicatorSample/CircleIndicatorSample%20WatchKit%20Extension/GlanceController.m"
-                  timestampString = "444006141.383725"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "12">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[GlanceController setPresentedTotalListItemCount:]"
-                  moduleName = "CircleIndicatorSample WatchKit Extension"
-                  urlString = "file:///Users/cosmon/iOSProjects/CircleIndicatorSample/CircleIndicatorSample%20WatchKit%20Extension/GlanceController.m"
-                  timestampString = "444006141.383914"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "16">
-               </Location>
-            </Locations>
+            startingLineNumber = "30"
+            endingLineNumber = "30">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
