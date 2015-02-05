@@ -38,10 +38,10 @@ FOUNDATION_EXPORT const unsigned char IntuitWearVersionString[];
 #import <IntuitWearKit/WearableAction.h>
 #import <IntuitWearKit/Page.h>
 #import <IntuitWearKit/ListStyle.h>
-#import <IntuitWearKit/IWGlanceCircleIndicator.h>
+#import <IntuitWearKit/IWRadialIndicator.h>
 #import <IntuitWearKit/IWearNotificationContent.h>
 #import <IntuitWearKit/NSUserDefaults+NSUserDefaultsExtentions.h>
-#import <IntuitWearKit/GlanceStyle.h>
+#import <IntuitWearKit/RadialStyle.h>
 
 // JSONModel classes
 #import <IntuitWearKit/JSONModelLib.h>

@@ -54,8 +54,16 @@
     IWAppConfigurationApplicationGroupsPrimary = @"group."INTUITWEAR_BUNDLE_PREFIX_STRING@".IWApp.storage";
     
     if (self){
-        // Initialize variables here.
-        GlanceStyle *glanceStyle = [self glanceStyleData];
+        
+        // Check if App Groups global variable has been set from main app.
+        // Set it if it has not been previously set.  Must do this before
+        // we get any data from NSUserDefaults
+        if (IWAppConfigurationApplicationGroupsPrimary == nil || IWAppConfigurationApplicationGroupsPrimary.length == 0) {
+            IWAppConfigurationApplicationGroupsPrimary = @"group."INTUITWEAR_BUNDLE_PREFIX_STRING@".IWApp.storage";
+        }
+        
+        
+        RadialStyle *radialStyle = [self glanceStyleData];
 
         // Configure interface objects here.
         NSLog(@"%@ initWithContext", self);
@@ -63,11 +71,11 @@
         // Set the data fields for the Circle Indicator from the
         // GlanceStyle object obtained from NSUserDefaults data that
         // is shared between the iOS Phone App and the Glance.
-        _presentedTotalListItemCount = glanceStyle.glanceTotalItemCount;
+        _presentedTotalListItemCount = radialStyle.radialTotalItemCount;
         
-        _presentedCompleteListItemCount = glanceStyle.glanceCompletedItemsCount;
+        _presentedCompleteListItemCount = radialStyle.radialCompletedItemsCount;
         
-        [_glanceHeaderLabel setText:glanceStyle.glanceHeaderLabelText];
+        [_glanceHeaderLabel setText:radialStyle.radialHeaderLabelText];
         
         NSLog(@"Watch Kit Extention for Glance : totalItemCount = %ld", _presentedTotalListItemCount);
         
@@ -90,16 +98,16 @@
 }
 
 /*!
- * @discussion Draws the Circle Indicator animation based on the data from
- *             the input GlanceStyle object.
+ * @discussion Draws the Radial Indicator animation based on the data from
+ *             the input RadialStyle object.
  *
- * @param glancestyle The GlanceStyle object used to share data from the iOS Phone app and the Glance.
+ * @param radialStyle The RadialStyle object used to share data from the iOS Phone app and the Glance.
  * @return void
  */
-- (void) drawGlanceWidget:(GlanceStyle *)glanceStyle {
+- (void) drawGlanceWidget:(RadialStyle *)radialStyle {
     
     //Construct and draw the updated widget
-    IWGlanceCircleIndicator *glanceWidget = [[IWGlanceCircleIndicator alloc] initWithGlanceStyle:glanceStyle];
+    IWRadialIndicator *glanceWidget = [[IWRadialIndicator alloc] initWithRadialStyle:radialStyle];
     [self.glanceWidgetGroup setBackgroundImage:glanceWidget.groupBackgroundImage];
     [self.glanceWidgetImage setImageNamed:glanceWidget.imageName];
     NSRange imageRange = glanceWidget.imageRange;
@@ -117,7 +125,7 @@
 - (void) drawGlanceWidget:(NSInteger)totalItemCount withNumberCompleted:(NSInteger)numberComplete {
     
     //Construct and draw the updated widget
-    IWGlanceCircleIndicator *glanceWidget = [[IWGlanceCircleIndicator alloc] initWithTotalItemCountAndColor:totalItemCount completeItemCount:numberComplete color:0];
+    IWRadialIndicator *glanceWidget = [[IWRadialIndicator alloc] initWithTotalItemCountAndColor:totalItemCount completeItemCount:numberComplete color:0];
     
     [self.glanceWidgetGroup setBackgroundImage:glanceWidget.groupBackgroundImage];
     [self.glanceWidgetImage setImageNamed:glanceWidget.imageName];
@@ -130,12 +138,12 @@
  *
  * @return The GlanceStyle object from NSUserDefaults.
  */
-- (GlanceStyle *)glanceStyleData {
+- (RadialStyle *)glanceStyleData {
     NSUserDefaults *userDefault=[[NSUserDefaults alloc] initWithSuiteName:IWAppConfigurationApplicationGroupsPrimary];
     NSData *myDecodedObject = [userDefault objectForKey: IWAppConfigurationIWContentUserDefaultsKey];
     IWearNotificationContent *glanceContent = [NSKeyedUnarchiver unarchiveObjectWithData: myDecodedObject];
     
-    return glanceContent.glanceStyle;
+    return glanceContent.radialStyle;
 }
 
 @end

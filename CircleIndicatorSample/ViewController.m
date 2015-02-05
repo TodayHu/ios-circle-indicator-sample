@@ -45,7 +45,7 @@ IWearNotificationContent *notificationContent;
 /*!
  * @discussion Initialize default data for Glance Content
  */
-NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"largeIcon\": \"default\",\"background\":\"bitmapName\",\"contentTitle\": \"Overall Title\",\"contentText\": \"This is the main text\",\"contentIntentName\": \"MainActivity\",\"glanceStyle\":{\"glanceColor\":1,\"glanceTotalItemCount\": 500,\"glanceCompletedItemsCount\":222,\"glanceHeaderLabelText\": \"Overall Budget\",\"glanceInnerLabelText\": \"$222\",\"glanceInnerSubLabelText\": \"Left\"},\"BigTextStyle\": {\"bigContentTitle\": \"Big content title\",\"bigText\":\"This is some very big text that might wrap and fill several lines I hope.\",\"summary\": \"Summary of big text.\"},\"pages\": [{\"pageTitle\":\"Page Title\",\"pageText\":\"New Page 1 Text.\"},{\"pageTitle\": \"Page 2 Title\",\"pageText\": \"New Page 2 Text.\"}],\"ListStyle\": {\"icon\":\"ic_menu_tt\",\"title\": \"Tap to take action!\",\"label\": \"Tax Day\",\"intentName\": \"com.intuit.intuitwear.testcases.ActionReceiver\",\"item\": [\"Purchase TurboTax\",\"Create Event\",\"Remind me later\",\"Dismiss\",\"Web Site\",\"Create a CalendarEvent\",\"Set an Alarm\",\"I don't pay taxes\"],\"visible\": 4}}";
+NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"largeIcon\": \"default\",\"background\":\"bitmapName\",\"contentTitle\": \"Overall Title\",\"contentText\": \"This is the main text\",\"contentIntentName\": \"MainActivity\",\"RadialStyle\":{\"radialColor\":1,\"radialTotalItemCount\": 500,\"radialCompletedItemsCount\":222,\"radialHeaderLabelText\": \"Overall Budget\",\"radialInnerLabelText\": \"$222\",\"radialInnerSubLabelText\": \"Left\"},\"BigTextStyle\": {\"bigContentTitle\": \"Big content title\",\"bigText\":\"This is some very big text that might wrap and fill several lines I hope.\",\"summary\": \"Summary of big text.\"},\"pages\": [{\"pageTitle\":\"Page Title\",\"pageText\":\"New Page 1 Text.\"},{\"pageTitle\": \"Page 2 Title\",\"pageText\": \"New Page 2 Text.\"}],\"ListStyle\": {\"icon\":\"ic_menu_tt\",\"title\": \"Tap to take action!\",\"label\": \"Tax Day\",\"intentName\": \"com.intuit.intuitwear.testcases.ActionReceiver\",\"item\": [\"Purchase TurboTax\",\"Create Event\",\"Remind me later\",\"Dismiss\",\"Web Site\",\"Create a CalendarEvent\",\"Set an Alarm\",\"I don't pay taxes\"],\"visible\": 4}}";
 
 /*!
  * @class ViewController
@@ -79,9 +79,9 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
     // user set the Inner Label based on the value of the completed items count instead
     // of having to set both values.
     
-    if (notificationContent.glanceStyle.glanceInnerLabelText == nil) {
-        NSString *completedCountValue = [NSString stringWithFormat:@"%ld", notificationContent.glanceStyle.glanceCompletedItemsCount];
-        notificationContent.glanceStyle.glanceInnerLabelText = completedCountValue;
+    if (notificationContent.radialStyle.radialInnerLabelText == nil) {
+        NSString *completedCountValue = [NSString stringWithFormat:@"%ld", notificationContent.radialStyle.radialCompletedItemsCount];
+        notificationContent.radialStyle.radialInnerLabelText = completedCountValue;
     }
     
     // Update User Defaults with the default values so the Glance has access to
@@ -95,12 +95,12 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
     // Init UI with Default JSON data
     
     // Init Total Count Slider values
-    self.totalCountValue.text = [NSString stringWithFormat:@"%ld", (long)notificationContent.glanceStyle.glanceTotalItemCount];
-    self.glanceTotalSlider.value = notificationContent.glanceStyle.glanceTotalItemCount;
+    self.totalCountValue.text = [NSString stringWithFormat:@"%ld", (long)notificationContent.radialStyle.radialTotalItemCount];
+    self.glanceTotalSlider.value = notificationContent.radialStyle.radialTotalItemCount;
     
     // Init Completed Count Slider values
-    self.completedCountValue.text = [NSString stringWithFormat:@"%ld", (long)notificationContent.glanceStyle.glanceCompletedItemsCount];
-    self.glanceCompletedSlider.value = notificationContent.glanceStyle.glanceCompletedItemsCount;
+    self.completedCountValue.text = [NSString stringWithFormat:@"%ld", (long)notificationContent.radialStyle.radialCompletedItemsCount];
+    self.glanceCompletedSlider.value = notificationContent.radialStyle.radialCompletedItemsCount;
 }
 
 /*!
@@ -111,7 +111,7 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
 - (void) viewDidAppear:(BOOL)animated {
     // Set Color Picker to notification content setting.
     // NOTE: This should be set here in viewDidAppear instead of viewDidLoad
-    NSInteger selectedDefaultRowShouldBe = notificationContent.glanceStyle.glanceColor;
+    NSInteger selectedDefaultRowShouldBe = notificationContent.radialStyle.radialColor;
     [_glanceColorPicker selectRow:selectedDefaultRowShouldBe inComponent:0 animated:NO];
     [_glanceColorPicker reloadComponent:0];
 }
@@ -172,7 +172,7 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
     NSLog(@"===> Row selected = %ld", (long)row);
     
     if ( notificationContent ) {
-        notificationContent.glanceStyle.glanceColor = row;
+        notificationContent.radialStyle.radialColor = row;
         [IWAppConfiguration sharedAppConfiguration].iwContent = notificationContent;
     }
 }
@@ -187,10 +187,10 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
     
     if (notificationContent) {
         // Save modified value to our IWearNotificationContent object
-        notificationContent.glanceStyle.glanceTotalItemCount = sender.value;
+        notificationContent.radialStyle.radialTotalItemCount = sender.value;
         
         // Update the NSUserDefaults with the new value for the GlanceWidget
-        NSLog(@"===> totalCount change in notification Content - %ld", (long)notificationContent.glanceStyle.glanceTotalItemCount);
+        NSLog(@"===> totalCount change in notification Content - %ld", (long)notificationContent.radialStyle.radialTotalItemCount);
         [IWAppConfiguration sharedAppConfiguration].iwContent = notificationContent;
     }
 }
@@ -206,15 +206,15 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
     
     // Save new value to NSUserDefaults
     if (notificationContent) {
-        notificationContent.glanceStyle.glanceCompletedItemsCount = sender.value;
+        notificationContent.radialStyle.radialCompletedItemsCount = sender.value;
         
         // Build inner label text.  If it wasn't initialized, set it to the completed
         //items value.
         
-        NSString *innerText = notificationContent.glanceStyle.glanceInnerLabelText;
+        NSString *innerText = notificationContent.radialStyle.radialInnerLabelText;
         
         if ( innerText == nil ) {
-            notificationContent.glanceStyle.glanceInnerLabelText = self.completedCountValue.text;
+            notificationContent.radialStyle.radialInnerLabelText = self.completedCountValue.text;
         }
         
         // Update the NSUserDefaults with the new value for the GlanceWidget

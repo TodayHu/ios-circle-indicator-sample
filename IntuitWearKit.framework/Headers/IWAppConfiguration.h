@@ -30,23 +30,23 @@
 /*!
  *  @discussion Enumeration of possible colors of the Circle Indicator
  */
-typedef NS_ENUM(NSInteger, IWGlanceColor){
+typedef NS_ENUM(NSInteger, IWRadialColor){
     /*!
      *  @discussion Red color
      */
-    IWGlanceColorRed,
+    IWRadialColorRed,
     /*!
      *  @discussion Green color
      */
-    IWGlanceColorGreen,
+    IWRadialColorGreen,
     /*!
      *  @discussion Yellow color
      */
-    IWGlanceColorYellow,
+    IWRadialColorYellow,
     /*!
      *  @discussion Default color is Green
      */
-    IWGlanceColorDefault
+    IWRadialColorDefault
 };
 
 /*!
@@ -77,10 +77,10 @@ extern NSString *const IWAppConfigurationIWContentUserDefaultsKey;
 @property (nonatomic) IWearNotificationContent *iwContent;
 
 /*!
- * @discussion GlanceStyle contains all of the data necessary to create and draw
- *             the IWGlanceCircleIndicator widget.
+ * @discussion RadialStyle contains all of the data necessary to create and draw
+ *             the IWRadialCircleIndicator widget.
  */
-@property (nonatomic) GlanceStyle *iwGlanceStyle;
+@property (nonatomic) RadialStyle *iwRadialStyle;
 
 /*!
  * @discussion Getter method that returns static accessor for the sharedAppConfiguration.
@@ -92,11 +92,11 @@ extern NSString *const IWAppConfigurationIWContentUserDefaultsKey;
 /*!
  *  @discussion This method converts the integer color value into its string representation.
  *
- *  @param color Integer value representing the color as defined by the IWGlanceColor
+ *  @param color Integer value representing the color as defined by the IWRadialColor
  *               Enumeration. Red = 0, Green = 1, Yellow = 2
  *
  *  @return String value of the color (i.e. "Red", "Green", "Yellow"
  */
-+ (NSString *)glanceColorStringFromInteger:(NSInteger)color;
++ (NSString *)radialColorStringFromInteger:(NSInteger)color;
 
 @end

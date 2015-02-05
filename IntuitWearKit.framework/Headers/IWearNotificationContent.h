@@ -25,12 +25,12 @@
 #import <Foundation/Foundation.h>
 #import <IntuitWearKit/JSONModel.h>
 #import <IntuitWearKit/ListStyle.h>
-#import <IntuitWearKit/IWGlanceCircleIndicator.h>
+#import <IntuitWearKit/IWRadialIndicator.h>
 #import <IntuitWearKit/Page.h>
 #import <IntuitWearKit/WearableAction.h>
 #import <IntuitWearKit/Action.h>
 
-@class GlanceStyle;
+@class RadialStyle;
 @class ListStyle;
 
 /*!
@@ -47,7 +47,7 @@
  *      BigTextStyle
  *      InboxStyle
  *      ListStyle
- *      GlanceStyle
+ *      RadialStyle
  */
 @property (nonatomic, retain) NSString *style;
 
@@ -92,7 +92,7 @@
 /*!
  *  This style supports a radial progress chart as is used in the Apple Watch Activity App
  */
-@property (nonatomic, retain) GlanceStyle<Optional> *glanceStyle;
+@property (nonatomic, retain) RadialStyle<Optional> *radialStyle;
 
 /*!
  *  Actions that can be triggered by this Notification

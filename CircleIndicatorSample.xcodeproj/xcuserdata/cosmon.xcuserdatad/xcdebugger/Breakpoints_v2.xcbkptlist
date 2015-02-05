@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CircleIndicatorSample WatchKit Extension/GlanceController.m"
-            timestampString = "444085651.984857"
+            timestampString = "444788614.535686"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "@implementation GlanceController"
             landmarkType = "3">
          </BreakpointContent>

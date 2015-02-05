@@ -1,5 +1,5 @@
 //
-//  GlanceWidgetStyle.h
+//  IWRadialIndicator.h
 //  IWApp
 //
 // Copyright (c) 2015 Intuit Inc.
@@ -23,63 +23,63 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import <IntuitWearKit/GlanceStyle.h>
+#import <IntuitWearKit/RadialStyle.h>
 
 @import WatchKit;
 
 /*!
- * @class IWGlanceCircleIndicator
+ * @class IWRadialIndicator
  *
  * @discussion This class draws a radial graph of a given color with text in the
  *        middle of the circle much like you see on the Apple Watch Acitivity App.
  */
-@interface IWGlanceCircleIndicator : NSObject
+@interface IWRadialIndicator : NSObject
 
 /*!
  * @discussion The string value of the color of the circle to be drawn.
  *             Current values are only "Red", "Green".
  */
-@property (nonatomic, retain) NSString *glanceColor;
+@property (nonatomic, retain) NSString *radialColor;
 
 /*!
  * @discussion The header text shown in the Group above the circle.
  */
 
-@property (nonatomic, retain) NSString *glanceHeaderText;
+@property (nonatomic, retain) NSString *radialHeaderText;
 
 /*!
- *  Initializes the IWGlanceCircleIndicator with the data from GlanceStyle.
+ *  Initializes the IWRadialIndicator with the data from RadialStyle.
  *
- *  @param glanceStyle The GlanceStyle object that contains all of the
- *                     IWGlanceCiricleIndicator parameters
+ *  @param radialStyle The RadialStyle object that contains all of the
+ *                     IWRadialIndicator parameters
  *
- *  @return The IWGlanceCircleIndicator object that handles building the circle
+ *  @return The IWRadialIndicator object that handles building the circle
  *         indicator and it's data
  */
-- (instancetype)initWithGlanceStyle:(GlanceStyle *)glanceStyle;
+- (instancetype)initWithRadialStyle:(RadialStyle *)radialStyle;
 
 /*!
- *  Initializes the IWGlanceCircularIndicator with an initial total item count
+ *  Initializes the IWRadialIndicator with an initial total item count
  *  and the number of completed items.
  *
  *  @param totalItemCount    The total number of items that represent a full circle.
  *  @param completeItemCount The number of items completed out of the total item count.
  *
- *  @return The IWGlanceCircleIndicator object that handles building the circle
+ *  @return The IWRadialIndicator object that handles building the circle
  *          indicator and it's data
  */
 - (instancetype)initWithTotalItemCount:(NSInteger)totalItemCount completeItemCount:(NSInteger)completeItemCount;
 
 /*!
- *  Initializes the IWGlanceCircularIndicator with an initial total item count
+ *  Initializes the IWRadialIndicator with an initial total item count
  *  and the number of completed items and an integer represent the color you
- *  wish the circle to be drawn in as defined by the NS_ENUM IWGlanceColor.
+ *  wish the circle to be drawn in as defined by the NS_ENUM IWRadialColor.
  *
  *  @param totalItemCount    The total number of items that represent a full circle.
  *  @param completeItemCount The number of items completed out of the total item count.
- *  @param color             NS_ENUM IWGlanceColor representing the color of the circle to be drawn.
+ *  @param color             NS_ENUM IWRadialColor representing the color of the circle to be drawn.
  *
- *  @return The IWGlanceCircleIndicator object that handles building the circle
+ *  @return The IWRadialIndicator object that handles building the circle
  *         indicator and it's data
  */
 - (instancetype)initWithTotalItemCountAndColor:(NSInteger)totalItemCount completeItemCount:(NSInteger)completeItemCount color:(NSInteger)color;
