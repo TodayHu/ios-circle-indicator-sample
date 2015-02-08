@@ -2517,6 +2517,7 @@
 				TargetAttributes = {
 					77E499171A6EC8D200E352F7 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = Q94VM3KJBP;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -2529,6 +2530,7 @@
 					};
 					77E499441A6EC8F400E352F7 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = Q94VM3KJBP;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;

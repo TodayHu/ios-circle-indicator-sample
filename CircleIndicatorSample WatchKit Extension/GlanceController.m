@@ -44,8 +44,7 @@
 
 #pragma mark - Initializers
 
-- (instancetype)initWithContext:(id)context {
-    self = [super initWithContext:context];
+- (void)awakeWithContext:(id)context {
     
     ////////////////////////////////////////////////////////////////////////
     // Set the Global Apps Group variable first thing!
@@ -82,7 +81,6 @@
         NSLog(@"Watch Kit Extention for Glance : completed ItemCount = %ld", _presentedCompleteListItemCount);
         
     }
-    return self;
 }
 
 - (void)willActivate {
