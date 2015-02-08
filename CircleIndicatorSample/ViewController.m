@@ -213,9 +213,7 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
         
         NSString *innerText = notificationContent.radialStyle.radialInnerLabelText;
         
-        if ( innerText == nil ) {
             notificationContent.radialStyle.radialInnerLabelText = self.completedCountValue.text;
-        }
         
         // Update the NSUserDefaults with the new value for the GlanceWidget
         [IWAppConfiguration sharedAppConfiguration].iwContent = notificationContent;
