@@ -25,6 +25,7 @@
 #import <Foundation/Foundation.h>
 #import <IntuitWearKit/JSONModel.h>
 #import <IntuitWearKit/ListStyle.h>
+#import <IntuitWearKit/BigTextStyle.h>
 #import <IntuitWearKit/IWRadialIndicator.h>
 #import <IntuitWearKit/Page.h>
 #import <IntuitWearKit/WearableAction.h>
@@ -88,6 +89,12 @@
  *  This style supports a vertically scrolling item list
  */
 @property (nonatomic, retain) ListStyle<Optional> *listStyle;
+
+/*!
+ *  This style supports longer text and title than a basic notification also provides 
+ *  a summary.
+ */
+@property (nonatomic, retain) BigTextStyle<Optional> *bigTextStyle;
 
 /*!
  *  This style supports a radial progress chart as is used in the Apple Watch Activity App

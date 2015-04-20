@@ -1,6 +1,6 @@
 //
 //  ViewController.m
-//  CircleIndicatorSample
+//  IWApp
 //
 // Copyright (c) 2015 Intuit Inc.
 //
@@ -22,48 +22,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "ViewController.h"
-
 @import IntuitWearKit;
 
+
+#import "ViewController.h"
+#import <IntuitWearKit/MMWormhole.h>
+
+
 @interface ViewController ()
-- (IBAction)totalCountValueChanged:(id)sender;
-- (IBAction)completedCountValueChanged:(id)sender;
+@property (nonatomic, strong) MMWormhole *wormhole;
 
 @end
 
-/*!
- * @discussion Initial values for Color Picker.
- */
-NSArray *_colorData;
 
-/*!
- * @discussion Object representing the JSON payload content for our Apple Watch App
- */
+NSArray *_colorData;
 IWearNotificationContent *notificationContent;
 
-/*!
- * @discussion Initialize default data for Glance Content
- */
-NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"largeIcon\": \"default\",\"background\":\"bitmapName\",\"contentTitle\": \"Overall Title\",\"contentText\": \"This is the main text\",\"contentIntentName\": \"MainActivity\",\"RadialStyle\":{\"radialColor\":1,\"radialTotalItemCount\": 500,\"radialCompletedItemsCount\":222,\"radialHeaderLabelText\": \"Overall Budget\",\"radialInnerLabelText\": \"$222\",\"radialInnerSubLabelText\": \"Left\"},\"BigTextStyle\": {\"bigContentTitle\": \"Big content title\",\"bigText\":\"This is some very big text that might wrap and fill several lines I hope.\",\"summary\": \"Summary of big text.\"},\"pages\": [{\"pageTitle\":\"Page Title\",\"pageText\":\"New Page 1 Text.\"},{\"pageTitle\": \"Page 2 Title\",\"pageText\": \"New Page 2 Text.\"}],\"ListStyle\": {\"icon\":\"ic_menu_tt\",\"title\": \"Tap to take action!\",\"label\": \"Tax Day\",\"intentName\": \"com.intuit.intuitwear.testcases.ActionReceiver\",\"item\": [\"Purchase TurboTax\",\"Create Event\",\"Remind me later\",\"Dismiss\",\"Web Site\",\"Create a CalendarEvent\",\"Set an Alarm\",\"I don't pay taxes\"],\"visible\": 4}}";
+// Define default data for Glance
+NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"largeIcon\": \"default\",\"background\":\"bitmapName\",\"contentTitle\": \"Overall Title\",\"contentText\": \"This is the main text\",\"contentIntentName\": \"MainActivity\",\"RadialStyle\":{\"radialColor\":\"radialImageGreen-\",\"radialTotalItemCount\": 500,\"radialCompletedItemsCount\":222,\"radialHeaderLabelText\": \"Overall Budget\",\"radialInnerLabelText\": \"$222\",\"radialInnerSubLabelText\": \"Left\"},\"BigTextStyle\": {\"bigContentTitle\": \"Big content title\",\"bigText\":\"This is some very big text that might wrap and fill several lines I hope.\",\"summary\": \"Summary of big text.\"},\"pages\": [{\"pageTitle\":\"Page Title\",\"pageText\":\"New Page 1 Text.\",\"pageBackground\":\"background1_img\"},{\"pageTitle\": \"Page 2 Title\",\"pageText\": \"New Page 2 Text.\",\"pageBackground\":\"background2_img\"}], \"actions\": [{\"icon\": \"icon_name_1\",\"actionName\": \"Button 1\",\"intentName\": \"com.intuit.intuitwear.MainActivity\"},{\"icon\": \"icon_name_2\",\"actionName\": \"Button 2\",\"intentName\": \"com.intuit.intuitwear.MainActivity\"}],\"ListStyle\": {\"icon\":\"ic_menu_tt\",\"title\": \"Tap to take action!\",\"label\": \"Tax Day\",\"intentName\": \"com.intuit.intuitwear.testcases.ActionReceiver\",\"item\": [\"Purchase TurboTax\",\"Create Event\",\"Remind me later\",\"Dismiss\",\"Web Site\",\"Create a CalendarEvent\",\"Set an Alarm\",\"I don't pay taxes\"],\"visible\": 4}}";
 
-/*!
- * @class ViewController
- *
- * @discussion Main iPhone application View Controller that handles all callbacks
- *             for the Circle Indicator controls (i.e. max, current values, etc).
- */
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     
-    ////////////////////////////////////////////////////////////////////////
     // Set the Global Apps Group variable first thing!
-    // This is used to define the App Groups string that defines the
-    // storage area between the iPhone app and the Watch App.
     IWAppConfigurationApplicationGroupsPrimary = @"group."INTUITWEAR_BUNDLE_PREFIX_STRING@".IWApp.storage";
+    
+    NSLog(@"%@ ===> viewDidLoad called!", self);
+    NSLog(@"===> JSON String initialized as: %@",jsonData);
+    
+    // Initialize the wormhole
+    self.wormhole = [[MMWormhole alloc] initWithApplicationGroupIdentifier:@"group.com.intuit.intuitwear.IWApp.storage" optionalDirectory:@"local"];
     
     // Set color data for glanceColorPicker
     _colorData = @[@"Red", @"Green"];
@@ -72,8 +62,28 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
     self.glanceColorPicker.dataSource = self;
     self.glanceColorPicker.delegate = self;
     
-    // User IntuitWearKit SKD t create IWearNotificationContent object from json data.
+    // Create IWearNotificationContent object from json data.
     notificationContent = [[IWearNotificationContent alloc] initWithString:jsonData error:nil];
+    
+    // Just testing Using Pages array
+    NSArray *pages = notificationContent.pages;
+    if (pages != nil) {
+        for (Page *object in pages) {
+            NSLog(@"page Title: %@", object.pageTitle);
+            NSLog(@"page background %@", object.pageBackground);
+        }
+    }
+    
+    // Just testing Using Actions array
+    NSArray *actions = notificationContent.actions;
+    if (actions != nil) {
+        for (Action *object in actions) {
+            NSLog(@"action icon: %@", object.icon);
+            NSLog(@"action Name %@", object.actionName);
+            NSLog(@"action IntentName %@", object.intentName);
+            
+        }
+    }
     
     // If glanceInnerLabel is nil, set it to the completed items count.  This lets the
     // user set the Inner Label based on the value of the completed items count instead
@@ -88,7 +98,7 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
     // this data
     [IWAppConfiguration sharedAppConfiguration].iwContent = notificationContent;
     
-        NSLog(@"JsonData to string %@", notificationContent.toJSONString);
+    //    NSLog(@"JsonData to string %@", notificationContent.toJSONString);
     
     /////////////////////////////////////////////////////////////////////////
     //
@@ -103,65 +113,42 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
     self.glanceCompletedSlider.value = notificationContent.radialStyle.radialCompletedItemsCount;
 }
 
-/*!
- *  Callback method called after the View Controller appeared on the screen.
- *
- *  @param animated Flag indicating if view should be animated as it appears.
- */
 - (void) viewDidAppear:(BOOL)animated {
     // Set Color Picker to notification content setting.
-    // NOTE: This should be set here in viewDidAppear instead of viewDidLoad
-    NSInteger selectedDefaultRowShouldBe = notificationContent.radialStyle.radialColor;
+    // NOTE: This should be set in viewDidAppear instead of viewDidLoad
+    
+    // Get image from stored value if it exists and set row based on this value
+    NSString * currentImgName = nil;
+    NSInteger currentRow = 0;
+    if (notificationContent) {
+        currentImgName = notificationContent.radialStyle.radialColor;
+        if ( [currentImgName isEqualToString:@"radialImageGreen-"]) {
+            currentRow = 1;
+        }
+    }
+    
+    NSInteger selectedDefaultRowShouldBe = currentRow;
     [_glanceColorPicker selectRow:selectedDefaultRowShouldBe inComponent:0 animated:NO];
     [_glanceColorPicker reloadComponent:0];
 }
 
-/*!
- *  Callback invoked when a memory warning occurs.  Dispose of any
- *  resources that were created by this class.
- */
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*!
- *  Returns the number of 'columns' to display.
- *
- *  @param pickerView Color picker that allows the user to choose the color
- *                    of the Circle Indicator.
- *
- *  @return Returns the number of components in the Picker view.
- */
+// returns the number of 'columns' to display.
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
 }
 
-/*!
- *  Returns the # of rows in each component
- *
- *  @param pickerView Color picker that allows the user to choose the color
- *                    of the Circle Indicator.
- *  @param component  Integer representing the row Component
- *
- *  @return # of rows in each component
- */
+// returns the # of rows in each component..
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     return _colorData.count;
 }
 
-/*!
- *  Returns the title of a given input row.
- *
- *  @param pickerView Color picker that allows the user to choose the color
- *                    of the Circle Indicator.
- *  @param row        Integer representing the row for which the title will be returned.
- *  @param component  Integer representing the component within the row.
- *
- *  @return The title of the Row.
- */
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     return _colorData[row];
@@ -172,18 +159,21 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
     NSLog(@"===> Row selected = %ld", (long)row);
     
     if ( notificationContent ) {
-        notificationContent.radialStyle.radialColor = row;
+        if (row == 0) {
+            notificationContent.radialStyle.radialColor = @"radialImageGreen-";
+        } else {
+            notificationContent.radialStyle.radialColor = @"radialImageRed-";
+        }
         [IWAppConfiguration sharedAppConfiguration].iwContent = notificationContent;
     }
 }
 
-/*!
- *  Callback invoked when the total count slider value has changed.
- *
- *  @param sender The UISlider object causing the event to trigger.
- */
 - (IBAction)totalCountValueChanged:(UISlider *)sender {
     self.totalCountValue.text = [NSString stringWithFormat:@"%f", sender.value];
+    
+    // Pass value through wormhole to Watch Glance.
+    // This updates the Watch Glance in realtime as the iOS app changes values.
+    [self.wormhole passMessageObject:@{@"totalCount" : [NSNumber numberWithFloat: sender.value]} identifier:@"RadialTotalCount"];
     
     if (notificationContent) {
         // Save modified value to our IWearNotificationContent object
@@ -192,17 +182,16 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
         // Update the NSUserDefaults with the new value for the GlanceWidget
         NSLog(@"===> totalCount change in notification Content - %ld", (long)notificationContent.radialStyle.radialTotalItemCount);
         [IWAppConfiguration sharedAppConfiguration].iwContent = notificationContent;
+        
     }
 }
 
-/*!
- *  Callback invoked when the completed count slider value has changed.
- *
- *  @param sender The UISlider object causing the event to trigger.
- */
 - (IBAction)completedCountValueChanged:(UISlider *)sender {
     int intSliderValue = [sender value];
     self.completedCountValue.text = [NSString stringWithFormat:@"%i", intSliderValue];
+    
+    // Pass value through wormhole to Watch Glance
+    [self.wormhole passMessageObject:@{@"completedCount" : [NSNumber numberWithInteger:intSliderValue]} identifier:@"RadialCompletedCount"];
     
     // Save new value to NSUserDefaults
     if (notificationContent) {
@@ -213,11 +202,14 @@ NSString *jsonData = @"{\"style\": \"GlanceStyle\",\"smallIcon\": \"default\",\"
         
         NSString *innerText = notificationContent.radialStyle.radialInnerLabelText;
         
+        if ( innerText == nil ) {
             notificationContent.radialStyle.radialInnerLabelText = self.completedCountValue.text;
+        }
         
         // Update the NSUserDefaults with the new value for the GlanceWidget
         [IWAppConfiguration sharedAppConfiguration].iwContent = notificationContent;
     }
-
+    
 }
+
 @end

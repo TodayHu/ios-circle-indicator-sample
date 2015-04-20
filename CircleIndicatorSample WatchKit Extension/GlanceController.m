@@ -25,6 +25,8 @@
 #import "GlanceController.h"
 @import IntuitWearKit;
 
+#import <IntuitWearKit/MMWormhole.h>
+
 /*!
  * @class GlanceController
  *
@@ -38,6 +40,8 @@
  */
 @property (nonatomic) NSInteger presentedTotalListItemCount;
 @property (nonatomic) NSInteger presentedCompleteListItemCount;
+@property (nonatomic, strong) MMWormhole *wormhole;
+@property (nonatomic, strong) RadialStyle *radialStyle;
 @end
 
 @implementation GlanceController
@@ -54,6 +58,8 @@
     
     if (self){
         
+        // Initialize variables here.
+        
         // Check if App Groups global variable has been set from main app.
         // Set it if it has not been previously set.  Must do this before
         // we get any data from NSUserDefaults
@@ -61,33 +67,86 @@
             IWAppConfigurationApplicationGroupsPrimary = @"group."INTUITWEAR_BUNDLE_PREFIX_STRING@".IWApp.storage";
         }
         
+        // Initialize communication channel with main iOS App
+        self.wormhole = [[MMWormhole alloc] initWithApplicationGroupIdentifier:@"group.com.intuit.intuitwear.IWApp.storage" optionalDirectory:@"local"];
         
-        RadialStyle *radialStyle = [self glanceStyleData];
-
+        
+        _radialStyle = [self glanceStyleData];
+        
         // Configure interface objects here.
         NSLog(@"%@ initWithContext", self);
         
-        // Set the data fields for the Circle Indicator from the
-        // GlanceStyle object obtained from NSUserDefaults data that
-        // is shared between the iOS Phone App and the Glance.
-        _presentedTotalListItemCount = radialStyle.radialTotalItemCount;
+        _presentedTotalListItemCount = _radialStyle.radialTotalItemCount;
         
-        _presentedCompleteListItemCount = radialStyle.radialCompletedItemsCount;
+        _presentedCompleteListItemCount = _radialStyle.radialCompletedItemsCount;
         
-        [_glanceHeaderLabel setText:radialStyle.radialHeaderLabelText];
+        [_glanceHeaderLabel setText: _radialStyle.radialHeaderLabelText];
+        
+        // Listen for changes to the selection message. The selection message contains a string value
+        // identified by the selectionString key. Note that the type of the key is included in the
+        // name of the key.
+        [self.wormhole listenForMessageWithIdentifier:@"RadialTotalCount" listener:^(id messageObject) {
+            NSNumber *total = [messageObject valueForKey:@"totalCount"];
+            _presentedTotalListItemCount = [total integerValue];
+            _radialStyle.radialTotalItemCount =_presentedTotalListItemCount;
+            
+            // Recompute Inner label representing # items left
+            NSInteger newLabelVal = _presentedTotalListItemCount - _radialStyle.radialCompletedItemsCount;
+            _radialStyle.radialInnerLabelText = [NSString stringWithFormat:@"%ld", newLabelVal];
+            
+            // redraw watch UI
+            [self drawGlanceWidget:_radialStyle];
+        }];
+        
+        [self.wormhole listenForMessageWithIdentifier:@"RadialCompletedCount" listener:^(id messageObject) {
+            NSNumber *completed = [messageObject valueForKey:@"completedCount"];
+            _presentedCompleteListItemCount = [completed integerValue];
+            _radialStyle.radialCompletedItemsCount =_presentedCompleteListItemCount;
+            
+            // Recompute Inner label representing # items left
+            NSInteger newLabelVal = _radialStyle.radialTotalItemCount - _presentedCompleteListItemCount;
+            _radialStyle.radialInnerLabelText = [NSString stringWithFormat:@"%ld", newLabelVal];
+            
+            // redraw watch UI
+            [self drawGlanceWidget:_radialStyle];
+        }];
         
         NSLog(@"Watch Kit Extention for Glance : totalItemCount = %ld", _presentedTotalListItemCount);
         
         NSLog(@"Watch Kit Extention for Glance : completed ItemCount = %ld", _presentedCompleteListItemCount);
-        
     }
+}
+
+- (void) drawGlanceWidget:(RadialStyle *)radialStyle {
+    
+    //Construct and draw the updated widget
+    IWRadialIndicator *glanceWidget = [[IWRadialIndicator alloc] initWithRadialStyle:radialStyle];
+    glanceWidget.numberOfImages = 360;
+    
+    [self.glanceWidgetGroup setBackgroundImage:glanceWidget.groupBackgroundImage];
+    [self.glanceWidgetImage setImageNamed:glanceWidget.radialColor];
+    NSRange imageRange = glanceWidget.imageRange;
+    NSLog(@"my range is %@", NSStringFromRange(imageRange));
+    [self.glanceWidgetImage startAnimatingWithImagesInRange:glanceWidget.imageRange duration:glanceWidget.animationDuration repeatCount:1];
+}
+
+- (void) drawGlanceWidget:(NSInteger)totalItemCount withNumberCompleted:(NSInteger)numberComplete {
+    
+    //Construct and draw the updated widget
+    IWRadialIndicator *glanceWidget = [[IWRadialIndicator alloc] initWithTotalItemCountAndColor:totalItemCount completeItemCount:numberComplete color:@"radialImageRed-"];
+    
+    [self.glanceWidgetGroup setBackgroundImage:glanceWidget.groupBackgroundImage];
+    [self.glanceWidgetImage setImageNamed:glanceWidget.radialColor];
+    [self.glanceWidgetImage startAnimatingWithImagesInRange:glanceWidget.imageRange duration:glanceWidget.animationDuration repeatCount:1];
 }
 
 - (void)willActivate {
     // This method is called when watch view controller is about to be visible to user
     NSLog(@"%@ will activate", self);
     
-    [self drawGlanceWidget:[self glanceStyleData]];
+    //    _radialStyle = [self glanceStyleData];
+    [self drawGlanceWidget:_radialStyle];
+    
 }
 
 - (void)didDeactivate {
@@ -95,47 +154,6 @@
     NSLog(@"%@ did deactivate", self);
 }
 
-/*!
- * @discussion Draws the Radial Indicator animation based on the data from
- *             the input RadialStyle object.
- *
- * @param radialStyle The RadialStyle object used to share data from the iOS Phone app and the Glance.
- * @return void
- */
-- (void) drawGlanceWidget:(RadialStyle *)radialStyle {
-    
-    //Construct and draw the updated widget
-    IWRadialIndicator *glanceWidget = [[IWRadialIndicator alloc] initWithRadialStyle:radialStyle];
-    [self.glanceWidgetGroup setBackgroundImage:glanceWidget.groupBackgroundImage];
-    [self.glanceWidgetImage setImageNamed:glanceWidget.imageName];
-    NSRange imageRange = glanceWidget.imageRange;
-    NSLog(@"my range is %@", NSStringFromRange(imageRange));
-    [self.glanceWidgetImage startAnimatingWithImagesInRange:glanceWidget.imageRange duration:glanceWidget.animationDuration repeatCount:1];
-}
-
-/*!
- * @discussion Draws the Circle Indicator animation based the total item count and
- *             the number of completed items
- * @param totalItemCount The total item count of the Circle Indicator
- * @param numberComplete Number of completed items out of the total.
- * @return void
- */
-- (void) drawGlanceWidget:(NSInteger)totalItemCount withNumberCompleted:(NSInteger)numberComplete {
-    
-    //Construct and draw the updated widget
-    IWRadialIndicator *glanceWidget = [[IWRadialIndicator alloc] initWithTotalItemCountAndColor:totalItemCount completeItemCount:numberComplete color:0];
-    
-    [self.glanceWidgetGroup setBackgroundImage:glanceWidget.groupBackgroundImage];
-    [self.glanceWidgetImage setImageNamed:glanceWidget.imageName];
-    [self.glanceWidgetImage startAnimatingWithImagesInRange:glanceWidget.imageRange duration:glanceWidget.animationDuration repeatCount:1];
-}
-
-/*!
- * @discussion This method retrieves the GlanceStyle object from NSUserDefaults so it
- *             can share data between the iOS Phone App and the Glance.
- *
- * @return The GlanceStyle object from NSUserDefaults.
- */
 - (RadialStyle *)glanceStyleData {
     NSUserDefaults *userDefault=[[NSUserDefaults alloc] initWithSuiteName:IWAppConfigurationApplicationGroupsPrimary];
     NSData *myDecodedObject = [userDefault objectForKey: IWAppConfigurationIWContentUserDefaultsKey];

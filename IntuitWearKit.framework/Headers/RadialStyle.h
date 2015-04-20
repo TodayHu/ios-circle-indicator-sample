@@ -38,7 +38,14 @@
  *             Current values are 0 = Red, 1 = Green
  */
 
-@property (nonatomic) NSInteger radialColor;
+//@property (nonatomic) NSInteger radialColor;
+
+/*!
+ * @discussion String representing the name of the image to use to draw
+ *             the radial indicator.
+ */
+
+@property (nonatomic) NSString *radialColor;
 
 /*!
  * @discussion Header text that will be drawn in the Group above the Circle.

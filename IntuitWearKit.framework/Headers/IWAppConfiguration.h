@@ -27,27 +27,27 @@
 #import <Foundation/Foundation.h>
 #import <IntuitWearKit/IWearNotificationContent.h>
 
-/*!
+/*
  *  @discussion Enumeration of possible colors of the Circle Indicator
  */
-typedef NS_ENUM(NSInteger, IWRadialColor){
-    /*!
-     *  @discussion Red color
-     */
-    IWRadialColorRed,
-    /*!
-     *  @discussion Green color
-     */
-    IWRadialColorGreen,
-    /*!
-     *  @discussion Yellow color
-     */
-    IWRadialColorYellow,
-    /*!
-     *  @discussion Default color is Green
-     */
-    IWRadialColorDefault
-};
+//typedef NS_ENUM(NSInteger, IWRadialColor){
+//    /*!
+//     *  @discussion Red color
+//     */
+//    IWRadialColorRed,
+//    /*!
+//     *  @discussion Green color
+//     */
+//    IWRadialColorGreen,
+//    /*!
+//     *  @discussion Yellow color
+//     */
+//    IWRadialColorYellow,
+//    /*!
+//     *  @discussion Default color is Green
+//     */
+//    IWRadialColorDefault
+//};
 
 /*!
  *  External global variable that should be used to indicate the App Group name
@@ -97,6 +97,6 @@ extern NSString *const IWAppConfigurationIWContentUserDefaultsKey;
  *
  *  @return String value of the color (i.e. "Red", "Green", "Yellow"
  */
-+ (NSString *)radialColorStringFromInteger:(NSInteger)color;
+//+ (NSString *)radialColorStringFromInteger:(NSInteger)color;
 
 @end

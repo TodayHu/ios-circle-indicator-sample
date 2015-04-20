@@ -1,5 +1,5 @@
 //
-//  Action.h
+//  BigTextStyle.h
 //  IntuitWear
 //
 // Copyright (c) 2015 Intuit Inc.
@@ -25,33 +25,26 @@
 #import <Foundation/Foundation.h>
 #import <IntuitWearKit/JSONModel.h>
 
-@protocol Action @end
-
 /*!
- * @class Action
+ *  @class BigTextStyle
  *
- * @discussion Actions that can be triggered by a Notification
+ *  @discussion This style supports longer text and title than a basic notification also provides a summary.
  */
-@interface Action : JSONModel  <NSCoding>
+@interface BigTextStyle : JSONModel <NSCoding>
 
 /*!
- * @discussion The name of the action icon.  On iOS this must be a name of an existing icon.
+ *  @discussion String representing a long title
  */
-@property (nonatomic, retain) NSString *icon;
+@property (nonatomic, retain) NSString *bigContentTitle;
 
 /*!
- * @discussion The name displayed on the action button.
+ *  @discussion String representing a longer message content
  */
-@property (nonatomic, retain) NSString *actionName;
-
-/**
- *  @discussion The name of the controller to launch when the action is selected.
- */
-@property (nonatomic, retain) NSString *intentName;
+@property (nonatomic, retain) NSString *bigText;
 
 /*!
- *  Extra parameters for the intent launched.
+ *  @discussion String representing a short summary of the content
  */
-@property (nonatomic, retain) NSArray<Optional> *extras;
+@property (nonatomic, retain) NSString *summary;
 
 @end

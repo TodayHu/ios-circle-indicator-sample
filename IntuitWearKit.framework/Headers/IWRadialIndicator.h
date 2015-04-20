@@ -36,8 +36,7 @@
 @interface IWRadialIndicator : NSObject
 
 /*!
- * @discussion The string value of the color of the circle to be drawn.
- *             Current values are only "Red", "Green".
+ * @discussion The image name of the image to be used for the Radial Indicator widget.
  */
 @property (nonatomic, retain) NSString *radialColor;
 
@@ -46,6 +45,12 @@
  */
 
 @property (nonatomic, retain) NSString *radialHeaderText;
+
+/*!
+ * @discussion The number of images in the Radial circle.
+ */
+
+@property (nonatomic) NSInteger numberOfImages;
 
 /*!
  *  Initializes the IWRadialIndicator with the data from RadialStyle.
@@ -72,17 +77,16 @@
 
 /*!
  *  Initializes the IWRadialIndicator with an initial total item count
- *  and the number of completed items and an integer represent the color you
- *  wish the circle to be drawn in as defined by the NS_ENUM IWRadialColor.
+ *  and the number of completed items and a string representing the image name of the circle to be drawn.
  *
  *  @param totalItemCount    The total number of items that represent a full circle.
  *  @param completeItemCount The number of items completed out of the total item count.
- *  @param color             NS_ENUM IWRadialColor representing the color of the circle to be drawn.
+ *  @param color             String representing the name of the color of the circle to be drawn.
  *
  *  @return The IWRadialIndicator object that handles building the circle
  *         indicator and it's data
  */
-- (instancetype)initWithTotalItemCountAndColor:(NSInteger)totalItemCount completeItemCount:(NSInteger)completeItemCount color:(NSInteger)color;
+- (instancetype)initWithTotalItemCountAndColor:(NSInteger)totalItemCount completeItemCount:(NSInteger)completeItemCount color:(NSString *)color;
 
 /// The total number of items.
 @property (readonly) NSInteger totalItemCount;
@@ -93,17 +97,14 @@
 /// The number of incomplete items.
 @property (readonly) NSInteger incompleteItemCount;
 
-/// The image name of the image to be used for the Glance widget.
-@property (readonly) NSString *imageName;
-
-/// The range of images to display in the Glance widget.
+/// The range of images to display in the Radial Indicator widget.
 @property (readonly) NSRange imageRange;
 
-/// The length that the Glance widget image will animate.
+/// The length that the Radial Indicator widget image will animate.
 @property (readonly) NSTimeInterval animationDuration;
 
 /*!
- * The background image to be displayed in the Glance widget. The \c groupBackgroundImage draws the text that
+ * The background image to be displayed in the Radial Indicator widget. The \c groupBackgroundImage draws the text that
  * contains the number of remaining items to complete.
  */
 @property (readonly) UIImage *groupBackgroundImage;
